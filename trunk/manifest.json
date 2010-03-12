@@ -1,0 +1,14 @@
+﻿{
+	"name": "Backspace As Back for Linux",
+	"version": "0.1",
+	"description": "Active Backspace to navigation back in history object",
+	"icons": { "128": "128.png" },
+	"background_page": "background.html",
+	"options_page": "options.html",
+	"content_scripts": [
+		{
+			"matches": ["http://*/*", "https://*/*", "ftp://*/*", "file:///*"],
+			"js": ["backspace.js"]
+		}
+	]
+}

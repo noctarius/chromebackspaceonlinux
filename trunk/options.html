@@ -1,0 +1,67 @@
+﻿<html>
+<head>
+<title>Backspace As Back for Linux Options</title>
+<style type="text/css" media="screen">
+	body {
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 13px;
+	}
+	
+	img {
+		vertical-align: middle;
+	}
+</style>
+<script type="text/javascript">
+
+// Saves options to localStorage.
+function save_options() {
+  var select = document.getElementById("backspace");
+  var activate = select.checked;
+  localStorage["activated"] = activate;
+
+  // Update status to let user know options were saved.
+  var status = document.getElementById("status");
+  status.innerHTML = "Options Saved.";
+  setTimeout(function() {
+    status.innerHTML = "";
+  }, 750);
+}
+
+// Restores select box state to saved value from localStorage.
+function restore_options() {
+  var activate = localStorage["activated"];
+  if (!activate)
+	return;
+  
+  activate = activate == "false" ? false : true;
+  var select = document.getElementById("backspace");
+	select.checked = activate;
+}
+
+</script>
+</head>
+
+<body onload="restore_options()">
+
+<table>
+	<tr>
+		<td colspan="2"><h1><img src="128.png" /> Backspace as Back for Linux</h1></td>
+	</tr>
+	<tr>
+		<td width="40">&nbsp;</td>
+		<td>
+			<input type="checkbox" id="backspace" value="activate">Active Backspace to navigation back in history object</input>
+		</td>
+	</tr>
+	<tr>
+		<td width="40">&nbsp;</td>
+		<td>
+			<button onclick="save_options()">Save</button>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2"><div id="status"/></td>
+	</tr>
+</table>
+</body>
+</html>
