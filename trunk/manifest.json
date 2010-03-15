@@ -5,6 +5,9 @@
 	"icons": { "128": "128.png" },
 	"background_page": "background.html",
 	"options_page": "options.html",
+	"permissions": [
+		"tabs"
+	],
 	"content_scripts": [
 		{
 			"matches": ["http://*/*", "https://*/*", "ftp://*/*", "file:///*"],

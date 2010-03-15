@@ -1,6 +1,14 @@
 ﻿<html>
 	<head>
 		<script>
+			var firstStart = localStorage["installed"];
+			if (!firstStart ||
+					firstStart != "true") {
+					chrome.tabs.create( { url: "options.html" }, function(tab) {
+						console.log("config-tab opened");
+					} );
+			}
+		
 			chrome.extension.onRequest.addListener(
 				function(request, sender, sendResponse) {
 					console.log(sender.tab ?
