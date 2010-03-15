@@ -7,7 +7,7 @@ function BackspaceKeyListener(event) {
 	var isAlt = event.altKey;
 	var isShift = event.shiftKey;
 	
-	if (!isCtrl && !isAlt && !isShift) {
+	if (!isCtrl && !isAlt) {
 		var target = event.target;
 		if (event.which == 8 && target) {		
 			// If on text fields enable usage
@@ -20,7 +20,10 @@ function BackspaceKeyListener(event) {
 					function(response) {
 						console.log(response.message);
 						if (response.message == true)
-							window.history.back();
+							if (!isShift)
+								window.history.back();
+							else
+								window.history.forward();
 					}
 				);
 		}
