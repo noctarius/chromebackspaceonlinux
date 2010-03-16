@@ -1,6 +1,4 @@
 ﻿document.onkeydown = BackspaceKeyListener;
-document.onkeyup = BackspaceKeyListener;
-document.onkeypress = BackspaceKeyListener;
 wasActivatedBefore = false;
 
 function BackspaceKeyListener(event) {
@@ -14,31 +12,12 @@ function BackspaceKeyListener(event) {
 			// If on text fields or messagequeue
 			// was already triggered disable usage
 			if (target.type == 'text' ||
-					target.type == 'textarea' ||
-					wasActivatedBefore) {
+					target.type == 'textarea') {
 				return true;
 			
 			} else {
 				// Mark as already triggered
-				wasActivatedBefore = true;
-				// Send message to background.html to test
-				// for activated state
-				chrome.extension.sendRequest( { message: "isActivated" }, 
-					function(response) {
-						console.log(response.message);
-						if (response.message == true) {
-							if (!isShift)
-								window.history.back();
-							else
-								window.history.forward();
-						} else {
-							// If extension isn't activated 
-							// just reset the trigger
-							wasActivatedBefore = true;
-						}
-					}
-				);
-				
+				window.setTimeout("UseBackspaceShortcut(" + isShift + ")", 0);
 				return false;
 			}
 		}
@@ -46,3 +25,18 @@ function BackspaceKeyListener(event) {
 	
 	return true;
 }
+function UseBackspaceShortcut(isShift) {
+	// Send message to background.html to test
+	// for activated state
+	chrome.extension.sendRequest( { message: "isActivated" }, 
+		function(response) {
+			console.log(response.message);
+			if (response.message == true)
+				if (!isShift)
+					window.history.back();
+				else
+					window.history.forward();
+		}
+	);
+}
+

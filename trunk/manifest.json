@@ -1,6 +1,6 @@
 ﻿{
 	"name": "Backspace As Back/Forward for Linux",
-	"version": "0.3",
+	"version": "0.32",
 	"description": "Activate Backspace shortcuts to navigate in history object",
 	"icons": { "128": "128.png" },
 	"background_page": "background.html",

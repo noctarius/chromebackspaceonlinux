@@ -5,6 +5,7 @@
 			if (!firstStart ||
 					firstStart != "true") {
 					chrome.tabs.create( { url: "options.html" }, function(tab) {
+						localStorage["installed"] = "true";
 						console.log("config-tab opened");
 					} );
 			}
