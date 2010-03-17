@@ -22,9 +22,11 @@ function restoreOptions() {
   if (!activate)
 	return;
   
-  var urls = localStorage["exceptions"];
-  if (urls)
-	urls = JSON.parse(urls);
+  urls = localStorage["exceptions"];
+  if (urls == "undefined")
+  	urls = new Array();
+  else
+    urls = JSON.parse(urls);
   
   activate = activate == "false" ? false : true;
   var select = document.getElementById("backspace");
