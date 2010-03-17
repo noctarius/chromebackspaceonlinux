@@ -16,15 +16,27 @@
 					"from a content script:" + sender.tab.url :
 					"from the extension");
 					
-					if (request.message == "isActivated")
-						sendResponse( { message: isActivated() } );
+					var csMessage = JSON.parse(request.message);
+					if (!csMessage)
+						sendResponse( { message: false } );
+					
+					if (csMessage.command == "isActivated")
+						sendResponse( { message: isActivated(csMessage.data) } );
 				}
 			);
 		
-			function isActivated() {
+			function isActivated(csMessage) {
 				var activate = localStorage["activated"];
 				if (!activate)
 					return false;
+  
+  				var urls = JSON.parse(localStorage["exceptions"]);
+  				for (var i = 0; i < urls.length; i++) {
+  					var regex = new RegExp(".*" + urls[i] + ".*");
+  				
+  					if (csMessage.match(regex))
+  						return false;
+  				}
   
 				return activate == "true";
 			}

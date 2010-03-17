@@ -28,7 +28,8 @@ function BackspaceKeyListener(event) {
 function UseBackspaceShortcut(isShift) {
 	// Send message to background.html to test
 	// for activated state
-	chrome.extension.sendRequest( { message: "isActivated" }, 
+	chrome.extension.sendRequest( 
+		{ message: JSON.stringify( { command: "isActivated", data: location.href } ) }, 
 		function(response) {
 			console.log(response.message);
 			if (response.message == true)
