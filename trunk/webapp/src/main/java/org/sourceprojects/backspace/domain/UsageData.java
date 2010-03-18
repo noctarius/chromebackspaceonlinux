@@ -10,6 +10,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class UsageData {
+	
 	@Id
 	@GeneratedValue
 	private Long id;
