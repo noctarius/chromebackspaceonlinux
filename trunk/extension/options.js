@@ -4,8 +4,18 @@ var urls;
 function saveOptions() {
 	var select = document.getElementById("usage");
 	var activate = select.checked;
+	// check if we need to start/stop usage collector
+	var bp = chrome.extension.getBackgroundPage();
+	if (activate) {
+		if (!bp.isUsageCollectionActivated())
+			bp.activateScheduler();
+	} else {
+		bp.deactivateScheduler();
+	}
+	//save the new value
 	localStorage["usage"] = activate;
 	
+	//save the new value
 	select = document.getElementById("backspace");
 	activate = select.checked;
 	localStorage["activated"] = activate;

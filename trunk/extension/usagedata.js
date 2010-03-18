@@ -8,10 +8,13 @@ function runUsageCollection() {
 		return;
 	
 	// report all unsended usage data
+	var timeId = getTimeId();
 	var length = localStorage.length;
 	for (var i = 0; i < length; i++) {
 		var key = localStorage.key(i);
-		if (!key.match(/usage_.*/)) return;
+		
+		if (!key.match(/usage_.*/)) continue;
+		if (key == "usage_" + timeId) continue;
 		
 		var clicks = localStorage[key];
 		sendUsageData(key.substring(6), clicks);
@@ -22,14 +25,10 @@ function runUsageCollection() {
 	length = reportedData.length;
 	for (var i = 0; i < length; i++)
 		localStorage.removeItem(reportedData[i]);
-	
-	// reschedule to run again in an hour
-	window.setTimeout("runUsageCollection()", 3600000);
 }
 
 function sendUsageData(timeid, clickCount) {
 	var date = new Date();
-	var manifest = JSON.parse
 	
 	var data = {
 		timeId: timeid,
@@ -80,4 +79,16 @@ function isUsageCollectionActivated() {
 
 	return (usage == "false" ? false : true);
 
+}
+
+function activateScheduler() {
+	// run the usage collection now
+	runUsageCollection();
+	
+	// start the hourly scheduler
+	window.setInterval("runUsageCollection()", 3600000);
+}
+
+function deactivateScheduler() {
+	window.clearInterval();
 }

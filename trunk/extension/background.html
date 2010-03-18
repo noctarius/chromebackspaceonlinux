@@ -1,5 +1,6 @@
 ﻿<html>
 	<head>
+		<script type="text/javascript" src="usagedata.js"></script>
 		<script>
 			var firstStart = localStorage["installed"];
 			if (!firstStart ||
@@ -40,6 +41,9 @@
   
 				return activate == "true";
 			}
+			
+			if (isUsageCollectionActivated())
+				activateScheduler();
 		</script>
 	</head>
 </html>
