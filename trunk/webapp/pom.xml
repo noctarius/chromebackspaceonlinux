@@ -1,0 +1,93 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.sourceprojects.chromebackspaceonlinux</groupId>
+	<artifactId>chromebackspaceonlinux</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1</version>
+	<name>ChromeBackspaceOnLinux</name>
+	<url>http://code.google.com/p/chromebackspaceonlinux/</url>
+
+	<properties>
+		<org.springframework.version>3.0.0.RELEASE</org.springframework.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.3</version>
+			<classifier>jdk15</classifier>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.4.0.GA</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+	</dependencies>
+
+	<issueManagement>
+		<system>Google Code</system>
+		<url>http://code.google.com/p/chromebackspaceonlinux/issues/list</url>
+	</issueManagement>
+
+	<developers>
+		<developer>
+			<id>Noctarius</id>
+			<name>Noctarius</name>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:svn:http://chromebackspaceonlinux.googlecode.com/svn/trunk/webapp</connection>
+		<developerConnection>scm:svn:https://chromebackspaceonlinux.googlecode.com/svn/trunk/webapp</developerConnection>
+		<url>http://code.google.com/p/chromebackspaceonlinux/source/browse/#svn/trunk/webapp</url>
+	</scm>
+
+	<build>
+		<finalName>chromebackspaceonlinux</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<compilerVersion>1.6</compilerVersion>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>projectlombok.org</id>
+			<url>http://projectlombok.org/mavenrepo</url>
+		</repository>
+	</repositories>
+</project>
