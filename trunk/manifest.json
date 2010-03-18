@@ -1,12 +1,13 @@
 ﻿{
 	"name": "Backspace As Back/Forward for Linux",
-	"version": "0.42",
+	"version": "0.50",
 	"description": "Activate Backspace shortcuts to navigate in history object",
 	"icons": { "128": "128.png" },
 	"background_page": "background.html",
 	"options_page": "options.html",
 	"permissions": [
-		"tabs"
+		"tabs",
+		"http://*.castellcore.org/"
 	],
 	"content_scripts": [
 		{

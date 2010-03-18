@@ -21,3 +21,22 @@ img {
 .divTitle span {
 	background-color: #ffffff;
 }
+
+.infoBorder {
+	width: 550px;
+	border: 1px solid #ff0000;
+	padding: 10px 5px 5px 5px;
+	color: #000000;
+	font-size: 11px;
+}
+
+.infoTitle {
+	position: relative;
+	top: -18px;
+}
+
+.infoTitle span {
+	background-color: #ffffff;
+	color: #ff0000;
+	font-size: 12px;
+}

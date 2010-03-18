@@ -1,5 +1,4 @@
 ﻿document.onkeydown = BackspaceKeyListener;
-wasActivatedBefore = false;
 
 function BackspaceKeyListener(event) {
 	var isCtrl = event.ctrlKey;
@@ -25,6 +24,7 @@ function BackspaceKeyListener(event) {
 	
 	return true;
 }
+
 function UseBackspaceShortcut(isShift) {
 	// Send message to background.html to test
 	// for activated state
