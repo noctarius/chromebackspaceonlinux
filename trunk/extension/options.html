@@ -1,70 +1,119 @@
 ﻿<html>
-	<head>
-		<title>Backspace As Back/Forward for Linux</title>
-		<link rel="stylesheet" type="text/css" href="options.css" media="screen" />
-		<script type="text/javascript" src="options.js"></script>
-	</head>
-
-	<body onload="startup()">
-
-	<table style="width: 700px;">
-		<tr>
-			<td colspan="2"><h1><img src="128.png" /> Backspace Shortcuts for Linux</h1></td>
-		</tr>
-		<tr>
-			<td width="40">&nbsp;</td>
-			<td>
-				<div class="divBorder"><div class="divTitle"><span>Base Configuration</span></div>
-					<input type="checkbox" id="backspace" value="activate">Activate Backspace for navigation in history object</input><br /><br />
-					<input type="checkbox" id="usage" value="activate">Allow this extension to collect anonymous usage data to help make it better</input><br />
-					<p><div class="infoBorder">
-						<div class="infoTitle"><span>What data will be collected?</span></div>
-						This extension collects basic, anonymous data about how many clicks you do per week collected.<br />
-							Collection Data:<br />
-							- TimeId: An hourly timestamp with the offset to GMT<br />
-							- Week: The actual week of the year (week starts at Sunday)<br />
-							- Year: The actual year<br />
-							- Clicks: The clicks per hour
-					</div></p>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td width="40">&nbsp;</td>
-			<td style="padding-top: 25px;">
-				<div class="divBorder"><div class="divTitle"><span>Page Exceptions <sub>(experimental)</sub></span></div>
-					<table style="width: 100%;">
-						<tr>
-							<td colspan="2">URL to add to the exceptions:</td>
-						</tR>
-						<tr>
-							<td style="width: 85%">
-								<input type="text" style="width: 100%;" id="url"></input>
-							</td>
-							<td><button id="exceptionAdd" style="width: 100%;" onclick="addException()">Add</button></td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<select id="urls" size="10" style="width: 100%;" onclick="checkExceptionList(this)"></select>
-							</td>
-						</tr>
-						<tr>
-							<td style="width: 85%">&nbsp;</td>
-							<td><button id="exceptionRemove" style="width: 100%;" disabled="true" onclick="removeFromExceptionList()">Remove</button></td>
-						</tr>
-					</table>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td width="40">&nbsp;</td>
-			<td>
-				<button onclick="saveOptions()">Save</button>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2"><div id="status"/></td>
-		</tr>
-	</table>
-</body>
-</html>
+    <head>
+        <title>Backspace As Back/Forward for Linux</title>
+        <link rel="stylesheet" type="text/css" href="options.css" media="screen" />
+        <script type="text/javascript" src="options.js">
+        </script>
+    </head>
+    <body onload="startup()">
+        <table style="width: 700px;">
+            <tr>
+                <td colspan="2">
+                    <h1><img src="128.png" />Backspace Shortcuts for Linux</h1>
+                </td>
+            </tr>
+            <tr>
+                <td width="40">
+                    &nbsp;
+                </td>
+                <td>
+                    <div class="divBorder">
+                        <div class="divTitle">
+                            <span>Base Configuration</span>
+                        </div>
+                        <input type="checkbox" id="backspace" value="activate">Activate Backspace for navigation in history object
+                        </input>
+                        <br/>
+                        <br/>
+                        <input type="checkbox" id="usage" value="activate">Allow this extension to collect anonymous usage data to help make it better
+                        </input>
+                        <br/>
+                        <p>
+                            <div class="infoBorder">
+                                <div class="infoTitle">
+                                    <span>What data will be collected?</span>
+                                </div>
+                                This extension collects basic, anonymous data about how many clicks you do per week collected.
+                                <br/>
+                                Collection Data:
+                                <br/>
+                                - TimeId: An hourly timestamp with the offset to GMT
+                                <br/>
+                                - Week: The actual week of the year (week starts at Sunday)
+                                <br/>
+                                - Year: The actual year
+                                <br/>
+                                - Clicks: The clicks per hour
+                            </div>
+                        </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="40">
+                        &nbsp;
+                    </td>
+                    <td style="padding-top: 25px;">
+                        <div class="divBorder">
+                        <div class="divTitle">
+                            <span>Page Exceptions 
+                                <sub>
+                                    (experimental)
+                                </sub>
+                            </span>
+                        </div>
+                        <table style="width: 100%;">
+                            <tr>
+                            <td colspan="2">
+                                URL to add to the exceptions:
+                            </td>
+                            </tR>
+                            <tr>
+                                <td style="width: 85%">
+                                    <input type="text" style="width: 100%;" id="url">
+                                    </input>
+                                </td>
+                                <td>
+                                    <button id="exceptionAdd" style="width: 100%;" onclick="addException()">
+                                        Add
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <select id="urls" size="10" style="width: 100%;" onclick="checkExceptionList(this)">
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 85%">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <button id="exceptionRemove" style="width: 100%;" disabled="true" onclick="removeFromExceptionList()">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="40">
+                        &nbsp;
+                    </td>
+                    <td>
+                        <button onclick="saveOptions()">
+                            Save
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="status"/>
+                    </td>
+                </tr>
+            </table>
+        </body>
+    </html>

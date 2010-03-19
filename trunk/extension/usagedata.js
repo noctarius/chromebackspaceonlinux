@@ -6,41 +6,44 @@ function runUsageCollection() {
 	// if usage collector is activated
 	if (!isUsageCollectionActivated())
 		return;
-	
+
 	// report all unsended usage data
 	var timeId = getTimeId();
 	var length = localStorage.length;
-	for (var i = 0; i < length; i++) {
+	for ( var i = 0; i < length; i++) {
 		var key = localStorage.key(i);
-		
-		if (!key.match(/usage_.*/)) continue;
-		if (key == "usage_" + timeId) continue;
-		
+
+		if (!key.match(/usage_.*/))
+			continue;
+		if (key == "usage_" + timeId)
+			continue;
+
 		var clicks = localStorage[key];
 		sendUsageData(key.substring(6), clicks);
 		reportedData.push(key);
 	}
-	
+
 	// deleted all already reported data
 	length = reportedData.length;
-	for (var i = 0; i < length; i++)
+	for ( var i = 0; i < length; i++)
 		localStorage.removeItem(reportedData[i]);
 }
 
 function sendUsageData(timeid, clickCount) {
 	var date = new Date();
-	
+
 	var data = {
-		timeId: timeid,
-		week: date.getWeek(),
-		year: date.getFullYear(),
-		clicks: clickCount
+		timeId : timeid,
+		week : date.getWeek(),
+		year : date.getFullYear(),
+		clicks : clickCount
 	};
-	
+
 	data = JSON.stringify(data);
-	
+
+	var url = "http://www.castellcore.org/chromebackspaceonlinux/usage/";
 	var http = new XMLHttpRequest();
-	http.open("POST", "http://www.castellcore.org/chromebackspaceonlinux/usage/" + timeId, true);
+	http.open("POST", url + timeId, true);
 	http.setRequestHeader("Content-type", "application/json");
 	http.setRequestHeader("Content-length", data.length);
 	http.setRequestHeader("Connection", "close");
@@ -55,9 +58,9 @@ function addUsage() {
 	// if usage collector is activated
 	if (!isUsageCollectionActivated())
 		return;
-	
+
 	var clicks = localStorage["usage_" + getTimeId()];
-	if (!clicks)
+	if (clicks == "undefined" || clicks == "NaN")
 		clicks = 1;
 	else
 		clicks++;
@@ -74,21 +77,29 @@ function getTimeId() {
 
 function isUsageCollectionActivated() {
 	var usage = localStorage["usage"];
-	if (!usage)
-		return;
+	console.log(usage);
+	if (usage == "undefined")
+		return false;
 
 	return (usage == "false" ? false : true);
 
 }
 
 function activateScheduler() {
+	if (!isUsageCollectionActivated())
+		return false;
+
 	// run the usage collection now
 	runUsageCollection();
-	
+
 	// start the hourly scheduler
-	window.setInterval("runUsageCollection()", 3600000);
+	// window.setInterval("runUsageCollection()", 3600000);
+	window.setInterval("runUsageCollection()", 3600);
+
+	return true;
 }
 
 function deactivateScheduler() {
 	window.clearInterval();
+	return true;
 }

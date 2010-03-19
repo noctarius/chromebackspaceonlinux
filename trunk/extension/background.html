@@ -1,49 +1,65 @@
 ﻿<html>
-	<head>
-		<script type="text/javascript" src="usagedata.js"></script>
-		<script>
-			var firstStart = localStorage["installed"];
-			if (!firstStart ||
-					firstStart != "true") {
-					chrome.tabs.create( { url: "options.html" }, function(tab) {
-						localStorage["installed"] = "true";
-						console.log("config-tab opened");
-					} );
-			}
-		
-			chrome.extension.onRequest.addListener(
-				function(request, sender, sendResponse) {
-					console.log(sender.tab ?
-					"from a content script:" + sender.tab.url :
-					"from the extension");
-					
-					var csMessage = JSON.parse(request.message);
-					if (!csMessage)
-						sendResponse( { message: false } );
-					
-					if (csMessage.command == "isActivated")
-						sendResponse( { message: isActivated(csMessage.data) } );
-				}
-			);
-		
-			function isActivated(csMessage) {
-				var activate = localStorage["activated"];
-				if (!activate)
-					return false;
-  
-  				var urls = JSON.parse(localStorage["exceptions"]);
-  				for (var i = 0; i < urls.length; i++) {
-  					var regex = new RegExp(".*" + urls[i] + ".*");
-  				
-  					if (csMessage.match(regex))
-  						return false;
-  				}
-  
-				return activate == "true";
-			}
-			
-			if (isUsageCollectionActivated())
-				activateScheduler();
-		</script>
-	</head>
+    <head>
+        <script type="text/javascript" src="usagedata.js">
+        </script>
+        <script>
+            var firstStart = localStorage["installed"];
+            if (!firstStart ||
+            firstStart != "true") {
+                chrome.tabs.create({
+                    url: "options.html"
+                }, function(tab){
+                    localStorage["installed"] = "true";
+                    console.log("config-tab opened");
+                });
+            }
+            
+            chrome.extension.onRequest.addListener(function(request, sender, sendResponse){
+                console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
+                
+                var csMessage = JSON.parse(request.message);
+                if (!csMessage) 
+                    sendResponse({
+                        message: false
+                    });
+                
+                if (csMessage.command == "isActivated") 
+                    sendResponse({
+                        message: isActivated(csMessage.data)
+                    });
+                else 
+                    if (csMessage.command == "activateScheduler") 
+                        sendResponse({
+                            message: activateScheduler()
+                        });
+                    else 
+                        if (csMessage.command == "deactivateScheduler") 
+                            sendResponse({
+                                message: deactivateScheduler()
+                            });
+            });
+            
+            function isActivated(csMessage){
+                var activate = localStorage["activated"];
+                if (!activate) 
+                    return false;
+                
+                var urls = JSON.parse(localStorage["exceptions"]);
+                for (var i = 0; i < urls.length; i++) {
+                    var regex = new RegExp(".*" + urls[i] + ".*");
+                    
+                    if (csMessage.match(regex)) 
+                        return false;
+                }
+                
+				if (isUsageCollectionActivated())
+					addUsage();
+				
+                return activate == "true";
+            }
+            
+            if (isUsageCollectionActivated()) 
+                activateScheduler();
+        </script>
+    </head>
 </html>

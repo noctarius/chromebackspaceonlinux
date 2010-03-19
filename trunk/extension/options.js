@@ -5,17 +5,15 @@ function saveOptions() {
 	var select = document.getElementById("usage");
 	var activate = select.checked;
 	// check if we need to start/stop usage collector
-	var bp = chrome.extension.getBackgroundPage();
 	if (activate) {
-		if (!bp.isUsageCollectionActivated())
-			bp.activateScheduler();
+		activateScheduler();
 	} else {
-		bp.deactivateScheduler();
+		deactivateScheduler();
 	}
-	//save the new value
+	// save the new value
 	localStorage["usage"] = activate;
-	
-	//save the new value
+
+	// save the new value
 	select = document.getElementById("backspace");
 	activate = select.checked;
 	localStorage["activated"] = activate;
@@ -33,7 +31,7 @@ function saveOptions() {
 // Restores select box state to saved value from localStorage.
 function restoreOptions() {
 	var activate = localStorage["activated"];
-	if (!activate)
+	if (activate == "undefined")
 		return;
 
 	activate = activate == "false" ? false : true;
@@ -41,13 +39,13 @@ function restoreOptions() {
 	select.checked = activate;
 
 	activate = localStorage["usage"];
-	if (!activate)
+	if (activate == "undefined")
 		return;
 
 	activate = activate == "false" ? false : true;
 	select = document.getElementById("usage");
 	select.checked = activate;
-	
+
 	urls = localStorage["exceptions"];
 	if (urls == "undefined")
 		urls = new Array();
@@ -145,3 +143,24 @@ function removeFromExceptionList() {
 	urls.sort();
 	fillExceptionList(urls);
 }
+
+function activateScheduler() {
+	chrome.extension.sendRequest( {
+		message : JSON.stringify( {
+			command : "activateScheduler"
+		})
+	}, function(response) {
+		console.log(response.message);
+	});
+}
+
+function deactivateScheduler() {
+	chrome.extension.sendRequest( {
+		message : JSON.stringify( {
+			command : "deactivateScheduler"
+		})
+	}, function(response) {
+		console.log(response.message);
+	});
+}
+

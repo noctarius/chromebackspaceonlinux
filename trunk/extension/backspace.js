@@ -11,7 +11,8 @@ function BackspaceKeyListener(event) {
 			// If on text fields or messagequeue
 			// was already triggered disable usage
 			if (target.type == 'text' ||
-					target.type == 'textarea') {
+					target.type == 'textarea' ||
+					target.type == 'password') {
 				return true;
 			
 			} else {
