@@ -30,7 +30,12 @@
 				if (!activate)
 					return false;
   
-  				var urls = JSON.parse(localStorage["exceptions"]);
+				urls = localStorage["exceptions"];
+				if (urls == "undefined")
+					return activate == "true";
+  				  
+  				urls = JSON.parse(urls);
+
   				for (var i = 0; i < urls.length; i++) {
   					var regex = new RegExp(".*" + urls[i] + ".*");
   				
