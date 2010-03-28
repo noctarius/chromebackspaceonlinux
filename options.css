@@ -21,3 +21,12 @@ img {
 .divTitle span {
 	background-color: #ffffff;
 }
+
+.changelog {
+	font-weight: bold;
+}
+
+.changelog ul li {
+	font-weight: normal;
+	font-size: 11px;
+}
