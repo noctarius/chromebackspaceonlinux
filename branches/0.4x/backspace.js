@@ -13,7 +13,10 @@ function BackspaceKeyListener(event) {
 			// was already triggered disable usage
 			if (target.type == 'text' ||
 					target.type == 'textarea' ||
-					target.type == 'password') {
+					target.type == 'password' ||
+					(target.outerHTML.indexOf('class="Mentions_Input" contenteditable="true"') > -1 &&
+						target.baseURI = 'http://www.facebook.com/'
+					)) {
 				return true;
 			
 			} else {
