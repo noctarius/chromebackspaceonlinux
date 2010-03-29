@@ -15,7 +15,7 @@ function BackspaceKeyListener(event) {
 					target.type == 'textarea' ||
 					target.type == 'password' ||
 					(target.outerHTML.indexOf('class="Mentions_Input" contenteditable="true"') > -1 &&
-						target.baseURI = 'http://www.facebook.com/'
+						target.baseURI == 'http://www.facebook.com/'
 					)) {
 				return true;
 			
