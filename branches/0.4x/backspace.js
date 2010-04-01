@@ -1,5 +1,10 @@
-﻿document.onkeydown = BackspaceKeyListener;
-wasActivatedBefore = false;
+var oldOnKeyDownHandler = null;
+
+if (!document.onkeydown)
+	oldOnKeyDownHandler = document.onkeydown;
+
+if (!isBlacklistedPage())
+	﻿document.onkeydown = BackspaceKeyListener;
 
 function BackspaceKeyListener(event) {
 	var isCtrl = event.ctrlKey;
@@ -11,12 +16,10 @@ function BackspaceKeyListener(event) {
 		if (event.which == 8 && target) {		
 			// If on text fields or messagequeue
 			// was already triggered disable usage
-			if (target.type == 'text' ||
-					target.type == 'textarea' ||
-					target.type == 'password' ||
-					(target.outerHTML.indexOf('class="Mentions_Input" contenteditable="true"') > -1 &&
-						target.baseURI == 'http://www.facebook.com/'
-					)) {
+			if (isLegalTextfield(target)) {
+				if (!oldOnKeyDownHandler)
+					return oldOnKeyDownHandler(events);
+					
 				return true;
 			
 			} else {
@@ -43,5 +46,27 @@ function UseBackspaceShortcut(isShift) {
 					window.history.forward();
 		}
 	);
+}
+function isLegalTextfield(target) {
+	if (target.type == 'text')
+		return true;
+		
+	if (target.type == 'textarea')
+		return true;
+		
+	if (target.type == 'password')
+		return true;
+		
+	if (target.outerHTML.indexOf('class="Mentions_Input" contenteditable="true"') > -1 &&
+			target.baseURI == 'http://www.facebook.com/')
+		return true;
+		
+	return false;
+}
+function isBlacklistedPage() {
+	if (location.href.indexOf("http://docs.google.com") > -1)
+		return true;
+
+	return false;
 }
 
