@@ -6,6 +6,10 @@ function saveOptions() {
   var activate = select.checked;
   localStorage["activated"] = activate;
 
+  select = document.getElementById("closetab");
+  activate = select.checked;
+  localStorage["closeOnHistoryTop"] = activate;
+  
   // Update status to let user know options were saved.
   var status = document.getElementById("status");
   status.innerHTML = "Options Saved.";
@@ -19,18 +23,24 @@ function saveOptions() {
 // Restores select box state to saved value from localStorage.
 function restoreOptions() {
   var activate = localStorage["activated"];
-  if (!activate)
-	return;
+  if (activate) {
+	  activate = activate == "false" ? false : true;
+	  var select = document.getElementById("backspace");
+	  select.checked = activate;
+  }
+  
+  activate = localStorage["closeOnHistoryTop"];
+  if (activate) {
+	  activate = activate == "false" ? false : true;
+	  var select = document.getElementById("closetab");
+	  select.checked = activate;
+  }
   
   urls = localStorage["exceptions"];
   if (urls == "undefined")
   	urls = new Array();
   else
     urls = JSON.parse(urls);
-  
-  activate = activate == "false" ? false : true;
-  var select = document.getElementById("backspace");
-	select.checked = activate;
 }
 
 function startup() {
