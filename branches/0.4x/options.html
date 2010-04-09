@@ -15,7 +15,8 @@
 			<td width="40">&nbsp;</td>
 			<td>
 				<div class="divBorder"><div class="divTitle"><span>Base Configuration</span></div>
-					<input type="checkbox" id="backspace" value="activate">Activate Backspace for navigation in history object</input>
+					<input type="checkbox" id="backspace" value="activate">Activate Backspace for navigation in history object</input><br />
+					<input type="checkbox" id="closetab" value="activate">Close actual tab on top of history object <sub>(experimental)</sub></input>
 				</div>
 			</td>
 		</tr>
@@ -60,6 +61,17 @@
 			<td style="padding-top: 25px;">
 				<div class="divBorder" id="changelog"><div class="divTitle" id="changelog_title"><span>Changelog</span></div>
 					<table style="width: 100%;">
+						<tr>
+							<td style="width: 85%">
+								<span class="changelog">
+									Version 0.49 - 2010/04/09:
+									<ul>
+										<li>Added exoperimental feature (Close actual tab on top of history) which closes the tab if the histories top is reached and moves back to previously activated tab (<a href="https://code.google.com/p/chromebackspaceonlinux/issues/detail?id=13">Issue 13</a>)</li>
+										<li>Fixed small bug with facebook, thx to mrlachatte (<a href="https://code.google.com/p/chromebackspaceonlinux/issues/detail?id=14">Issue 14</a>)</li>
+									</ul>
+								</span>
+							</td>
+						</tr>
 						<tr>
 							<td style="width: 85%">
 								<span class="changelog">

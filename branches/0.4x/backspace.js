@@ -4,7 +4,7 @@ if (!document.onkeydown)
 	oldOnKeyDownHandler = document.onkeydown;
 
 if (!isBlacklistedPage())
-	﻿document.onkeydown = BackspaceKeyListener;
+	document.onkeydown = BackspaceKeyListener;
 
 function BackspaceKeyListener(event) {
 	var isCtrl = event.ctrlKey;
@@ -32,21 +32,36 @@ function BackspaceKeyListener(event) {
 	
 	return true;
 }
+
 function UseBackspaceShortcut(isShift) {
+	if (window.history.length == 1) {
+		chrome.extension.sendRequest( {
+			message: JSON.stringify( { 
+				command: "closeTab"
+			} )
+		} );
+		
+		return;
+	}
+
 	// Send message to background.html to test
 	// for activated state
-	chrome.extension.sendRequest( 
-		{ message: JSON.stringify( { command: "isActivated", data: location.href } ) }, 
-		function(response) {
-			console.log(response.message);
-			if (response.message == true)
-				if (!isShift)
-					window.history.back();
-				else
-					window.history.forward();
+	chrome.extension.sendRequest( {
+		message: JSON.stringify( { 
+			command: "isActivated", 
+			data: location.href 
+		} )
+	}, function(response) {
+		console.log(response.message);
+		if (response.message == true)
+			if (!isShift)
+				window.history.back();
+			else
+				window.history.forward();
 		}
 	);
 }
+
 function isLegalTextfield(target) {
 	if (target.type == 'text')
 		return true;
@@ -58,11 +73,12 @@ function isLegalTextfield(target) {
 		return true;
 		
 	if (target.outerHTML.indexOf('class="Mentions_Input" contenteditable="true"') > -1 &&
-			target.baseURI.indexOf('http://www.facebook.com/') < -1)
+			target.baseURI.indexOf('http://www.facebook.com/') > -1)
 		return true;
 		
 	return false;
 }
+
 function isBlacklistedPage() {
 	if (location.href.indexOf("http://docs.google.com") > -1)
 		return true;
