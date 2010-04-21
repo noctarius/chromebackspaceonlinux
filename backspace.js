@@ -80,7 +80,10 @@ function isLegalTextfield(target) {
 }
 
 function isBlacklistedPage() {
-	if (location.href.indexOf("http://docs.google.com") > -1)
+	if (location.href.indexOf("docs.google.com") > -1)
+		return true;
+
+	if (location.href.indexOf("sites.google.com") > -1)
 		return true;
 
 	return false;
