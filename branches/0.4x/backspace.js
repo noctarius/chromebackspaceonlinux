@@ -75,6 +75,9 @@ function isLegalTextfield(target) {
 	if (target.type == 'search')
 		return true;
 		
+	if (target.type == 'email')
+		return true;
+		
 	if (target.outerHTML.indexOf('class="Mentions_Input" contenteditable="true"') > -1 &&
 			target.baseURI.indexOf('http://www.facebook.com/') > -1)
 		return true;
