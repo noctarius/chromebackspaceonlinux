@@ -78,6 +78,11 @@ function isLegalTextfield(target) {
 	if (target.type == 'email')
 		return true;
 	
+	if (target.tagName == 'DIV' &&
+		target.className.indexOf("cell-input") > -1) {
+		return true;
+	}
+
 	if (location.href.indexOf("sites.google.com") > -1) {
 		var body = document.body;
 		if (body != null &&
