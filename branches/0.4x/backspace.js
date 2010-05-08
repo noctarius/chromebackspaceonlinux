@@ -77,7 +77,14 @@ function isLegalTextfield(target) {
 		
 	if (target.type == 'email')
 		return true;
-		
+	
+	if (location.href.indexOf("sites.google.com") > -1) {
+		var body = document.body;
+		if (body != null &&
+			body.className.indexOf("sites-edit-in-progress") > -1)
+			return true;
+	}
+
 	if (target.outerHTML.indexOf('class="Mentions_Input" contenteditable="true"') > -1 &&
 			target.baseURI.indexOf('http://www.facebook.com/') > -1)
 		return true;
@@ -87,9 +94,6 @@ function isLegalTextfield(target) {
 
 function isBlacklistedPage() {
 	if (location.href.indexOf("docs.google.com") > -1)
-		return true;
-
-	if (location.href.indexOf("sites.google.com") > -1)
 		return true;
 
 	return false;
