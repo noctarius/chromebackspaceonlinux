@@ -3,8 +3,32 @@ var oldOnKeyDownHandler = null;
 if (!document.onkeydown)
 	oldOnKeyDownHandler = document.onkeydown;
 
-if (!isBlacklistedPage())
+if (!isBlacklistedPage()) {
 	document.onkeydown = BackspaceKeyListener;
+
+	// Send message to background.html to test
+	// for activated state
+	chrome.extension.sendRequest( {
+		message: JSON.stringify( { 
+			command: "isActivated", 
+			data: location.href 
+		} )
+	}, function(response) {
+		if (response.message == true)
+			showPageAction(true);
+		else
+			showPageAction(false);
+	} );
+}
+
+function showPageAction(ok) {
+	chrome.extension.sendRequest( {
+		message: JSON.stringify( { 
+			command: "showPageAction", 
+			data: ok 
+		} )
+	} );
+}
 
 function BackspaceKeyListener(event) {
 	var isCtrl = event.ctrlKey;

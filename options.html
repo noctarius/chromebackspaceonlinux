@@ -15,8 +15,9 @@
 			<td width="40">&nbsp;</td>
 			<td>
 				<div class="divBorder"><div class="divTitle"><span>Base Configuration</span></div>
-					<input type="checkbox" id="backspace" value="activate">Activate Backspace for navigation in history object</input><br />
-					<input type="checkbox" id="closetab" value="activate">Close actual tab on top of history object <sub>(experimental)</sub></input>
+					<input type="checkbox" id="backspace" value="activate" onclick="saveOptions()">Activate Backspace for navigation in history object</input><br />
+					<input type="checkbox" id="pageaction" value="activate" onclick="saveOptions()">Show state icon on omnibox</input><br />
+					<input type="checkbox" id="closetab" value="activate" onclick="saveOptions()">Close actual tab on top of history object <sub>(experimental)</sub></input>
 				</div>
 			</td>
 		</tr>
@@ -32,7 +33,7 @@
 							<td style="width: 85%">
 								<input type="text" style="width: 100%;" id="url"></input>
 							</td>
-							<td><button id="exceptionAdd" style="width: 100%;" onclick="addException()">Add</button></td>
+							<td><button id="exceptionAdd" style="width: 100%;" onclick="addException(); saveOptions();">Add</button></td>
 						</tr>
 						<tr>
 							<td colspan="2">
@@ -41,16 +42,10 @@
 						</tr>
 						<tr>
 							<td style="width: 85%">&nbsp;</td>
-							<td><button id="exceptionRemove" style="width: 100%;" disabled="true" onclick="removeFromExceptionList()">Remove</button></td>
+							<td><button id="exceptionRemove" style="width: 100%;" disabled="true" onclick="removeFromExceptionList(); saveOptions();">Remove</button></td>
 						</tr>
 					</table>
 				</div>
-			</td>
-		</tr>
-		<tr>
-			<td width="40">&nbsp;</td>
-			<td>
-				<button onclick="saveOptions()">Save</button>
 			</td>
 		</tr>
 		<tr>
@@ -64,9 +59,35 @@
 						<tr>
 							<td style="width: 85%">
 								<span class="changelog">
+									Version 0.50 - 2010/08/02:
+									<ul>
+										<li>Fixed frameset bug (<a href="http://code.google.com/p/chromebackspaceonlinux/issues/detail?id=24">Issue 24</a>)</li>
+										<li>Added page action icon (<a href="http://code.google.com/p/chromebackspaceonlinux/issues/detail?id=8">Issue 8</a>)</li>
+										<li>Made options autosave their value (wish from commentlist)</li>
+									</ul>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 85%">
+								<span class="changelog">
+									Version 0.49.x (fix releases) - chronological order:
+									<ul>
+										<li>Removed chrome:// protocol from manifest.json (shortcuts in newtab / overview page won't work anymore)</li>
+										<li>Made a better way to block Google Sites only in conent edit mode</li>
+										<li>Added chrome:// urls to handled protocols to activate shortcuts on internal pages</li>
+										<li>Added custom input field type 'search' to legal textfields</li>
+										<li>Temporarily blacklisted sites.google.com since there are special handlers for div-layers to edit content. Need to find a better way to find out if in edit oder viewmode.</li>
+									</ul>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 85%">
+								<span class="changelog">
 									Version 0.49 - 2010/04/09:
 									<ul>
-										<li>Added exoperimental feature (Close actual tab on top of history) which closes the tab if the histories top is reached and moves back to previously activated tab (<a href="https://code.google.com/p/chromebackspaceonlinux/issues/detail?id=13">Issue 13</a>)</li>
+										<li>Added experimental feature (Close actual tab on top of history) which closes the tab if the histories top is reached and moves back to previously activated tab (<a href="https://code.google.com/p/chromebackspaceonlinux/issues/detail?id=13">Issue 13</a>)</li>
 										<li>Fixed small bug with facebook, thx to mrlachatte (<a href="https://code.google.com/p/chromebackspaceonlinux/issues/detail?id=14">Issue 14</a>)</li>
 									</ul>
 								</span>

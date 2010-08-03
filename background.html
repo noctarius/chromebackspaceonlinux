@@ -59,9 +59,38 @@
 						
 					if (csMessage.command == "closeTab")
 						closeTab(sender.tab, csMessage);
+
+					if (csMessage.command == "showPageAction")
+						showPageAction(sender.tab, csMessage);
 				}
 			);
 		
+			function showPageAction(tab, csMessage) {
+				var activate = localStorage["showPageAction"];
+				
+				if (!activate || activate != "true")
+					return;
+
+				var path = "enabled.png";
+				var title = "Backspace Key-Binding enabled";
+				if (csMessage.data == false) {
+					path = "disabled.png";
+					title = "Backspace Key-Binding disabled";
+				}
+
+				chrome.pageAction.setIcon( {
+					"tabId": tab.id,
+					"path": path
+				} );
+
+				chrome.pageAction.setTitle( {
+					"tabId": tab.id,
+					"title": title
+				} );
+
+				chrome.pageAction.show(tab.id);
+			}
+
 			function isActivated(csMessage) {
 				var activate = localStorage["activated"];
 				if (!activate)
