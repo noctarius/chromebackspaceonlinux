@@ -10,6 +10,10 @@ function saveOptions() {
   activate = select.checked;
   localStorage["closeOnHistoryTop"] = activate;
   
+  select = document.getElementById("pageaction");
+  activate = select.checked;
+  localStorage["showPageAction"] = activate;
+
   // Update status to let user know options were saved.
   var status = document.getElementById("status");
   status.innerHTML = "Options Saved.";
@@ -33,6 +37,13 @@ function restoreOptions() {
   if (activate) {
 	  activate = activate == "false" ? false : true;
 	  var select = document.getElementById("closetab");
+	  select.checked = activate;
+  }
+
+  activate = localStorage["showPageAction"];
+  if (activate) {
+	  activate = activate == "false" ? false : true;
+	  var select = document.getElementById("pageaction");
 	  select.checked = activate;
   }
   
