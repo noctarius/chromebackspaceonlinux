@@ -19,6 +19,8 @@ if (!isBlacklistedPage()) {
 		else
 			showPageAction(false);
 	} );
+} else {
+	showPageAction(false);
 }
 
 function showPageAction(ok) {
@@ -123,6 +125,9 @@ function isLegalTextfield(target) {
 
 function isBlacklistedPage() {
 	if (location.href.indexOf("docs.google.com") > -1)
+		return true;
+
+	if (location.href.indexOf("spreadsheets.google.com") > -1)
 		return true;
 
 	return false;
