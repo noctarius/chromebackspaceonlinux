@@ -43,8 +43,8 @@ function BackspaceKeyListener(event) {
 			// If on text fields or messagequeue
 			// was already triggered disable usage
 			if (isLegalTextfield(target)) {
-				if (!oldOnKeyDownHandler)
-					return oldOnKeyDownHandler(events);
+				if (!oldOnKeyDownHandler && typeof(oldOnKeyDownHandler) == 'function')
+					return oldOnKeyDownHandler(event);
 					
 				return true;
 			
@@ -115,6 +115,15 @@ function isLegalTextfield(target) {
 			body.className.indexOf("sites-edit-in-progress") > -1)
 			return true;
 	}
+
+	var selection = window.getSelection();
+	console.log(selection.focusNode.nodeType);
+	if ( ( selection.focusNode.nodeType != 3 && selection.focusNode.isContentEditable ) ||
+		( selection.focusNode.nodeType == 3 && selection.focusNode.parentNode.isContentEditable ))
+		return true;
+
+	if (target.ownerDocument.designMode == "on")
+		return true;
 
 	if (target.outerHTML.indexOf('class="Mentions_Input" contenteditable="true"') > -1 &&
 			target.baseURI.indexOf('http://www.facebook.com/') > -1)
