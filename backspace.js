@@ -117,10 +117,11 @@ function isLegalTextfield(target) {
 	}
 
 	var selection = window.getSelection();
-	console.log(selection.focusNode.nodeType);
-	if ( ( selection.focusNode.nodeType != 3 && selection.focusNode.isContentEditable ) ||
-		( selection.focusNode.nodeType == 3 && selection.focusNode.parentNode.isContentEditable ))
-		return true;
+	if (selection.focusNode) {
+		if ( ( selection.focusNode.nodeType != 3 && selection.focusNode.isContentEditable ) ||
+			( selection.focusNode.nodeType == 3 && selection.focusNode.parentNode.isContentEditable ))
+			return true;
+	}
 
 	if (target.ownerDocument.designMode == "on")
 		return true;
