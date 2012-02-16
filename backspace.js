@@ -134,6 +134,9 @@ function isLegalTextfield(target) {
 }
 
 function isBlacklistedPage() {
+	if (isSystemWindows())
+		return true;
+
 	if (location.href.indexOf("docs.google.com") > -1)
 		return true;
 
@@ -143,3 +146,10 @@ function isBlacklistedPage() {
 	return false;
 }
 
+function isSystemWindows() {
+	var userAgent = navigator.userAgent;
+	if (userAgent.indexOf("Windows") != -1)
+		return true;
+	else
+		return false;
+}
