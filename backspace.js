@@ -89,6 +89,9 @@ function UseBackspaceShortcut(isShift) {
 }
 
 function isLegalTextfield(target) {
+	if (target.isContentEditable)
+		return true;
+
 	if (target.type == 'text')
 		return true;
 		
