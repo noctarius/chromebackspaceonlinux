@@ -1,0 +1,1 @@
+Since Google removed support for shortcut Backspace for history.back() on Linux in one of the last releases this extension brings it back to Chrome.
