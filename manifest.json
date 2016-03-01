@@ -1,5 +1,9 @@
 {
-   "background_page": "background.html",
+   "manifest_version": 2,
+   "background": {
+      "scripts": [ "background.js" ]
+      //"persistent": false
+   },
    "content_scripts": [ {
       "all_frames": true,
       "js": [ "backspace.js", "jquery.js" ],
@@ -9,7 +13,6 @@
    "icons": {
       "128": "128.png"
    },
-   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClMPyWWKgXZG48t5sOhxk+4pUqThkB0bOAKJzGsIZh0xXB9p/4EdOYz64kFi2GTDFo5qCdIBBiTErbhKwgvOwAXzNDQi7JyC6YulR+0LD1oaK5g6M/yj+6C4X+Rn9QRXBc6jrmlHk26mp1z9xDEIL7+6oajc++Ad7nijSehSwTuwIDAQAB",
    "name": "Backspace As Back/Forward for Linux",
    "options_page": "options.html",
    "page_action": {
@@ -17,6 +20,5 @@
       "default_title": "Backspace-Keybinding State"
    },
    "permissions": [ "tabs", "notifications" ],
-   "update_url": "http://clients2.google.com/service/update2/crx",
    "version": "0.6.0"
 }

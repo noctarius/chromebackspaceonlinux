@@ -48,7 +48,7 @@ function restoreOptions() {
   }
   
   urls = localStorage["exceptions"];
-  if (urls == "undefined")
+  if (!urls || urls == "undefined")
   	urls = new Array();
   else
     urls = JSON.parse(urls);
@@ -57,6 +57,28 @@ function restoreOptions() {
 function startup() {
 	restoreOptions();
 	fillExceptionList(urls);
+
+	// Register checkbox click handlers
+	var checkboxes = document.querySelectorAll('input[type=checkbox]');
+	for (var i = 0; i < checkboxes.length; i++) {
+		checkboxes[i].addEventListener("click", saveOptions)
+	}
+
+	// Register exception remove button click handler
+	document.getElementById('exceptionRemove').addEventListener("click", function() {
+		removeFromExceptionList();
+		saveOptions();
+	});
+
+	// Register exception add button click handler
+	document.getElementById('exceptionAdd').addEventListener("click", function() {
+		addException();
+		saveOptions();
+	});
+
+	document.getElementById('urls').addEventListener("click", function(el) {
+		checkExceptionList(el);
+	});
 }
 
 function addException() {
@@ -133,3 +155,5 @@ function removeFromExceptionList() {
 	urls.sort();
 	fillExceptionList(urls);	
 }
+
+document.addEventListener('DOMContentLoaded', startup);

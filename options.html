@@ -5,7 +5,7 @@
 		<script type="text/javascript" src="options.js"></script>
 	</head>
 
-	<body onload="startup()">
+	<body>
 
 	<table style="width: 700px;">
 		<tr>
@@ -15,9 +15,9 @@
 			<td width="40">&nbsp;</td>
 			<td>
 				<div class="divBorder"><div class="divTitle"><span>Base Configuration</span></div>
-					<input type="checkbox" id="backspace" value="activate" onclick="saveOptions()">Activate Backspace for navigation in history object</input><br />
-					<input type="checkbox" id="pageaction" value="activate" onclick="saveOptions()">Show state icon on omnibox</input><br />
-					<input type="checkbox" id="closetab" value="activate" onclick="saveOptions()">Close actual tab on top of history object <sub>(experimental)</sub></input>
+					<input type="checkbox" id="backspace" value="activate">Activate Backspace for navigation in history object</input><br />
+					<input type="checkbox" id="pageaction" value="activate">Show state icon on omnibox</input><br />
+					<input type="checkbox" id="closetab" value="activate">Close actual tab on top of history object <sub>(experimental)</sub></input>
 				</div>
 			</td>
 		</tr>
@@ -33,16 +33,16 @@
 							<td style="width: 85%">
 								<input type="text" style="width: 100%;" id="url"></input>
 							</td>
-							<td><button id="exceptionAdd" style="width: 100%;" onclick="addException(); saveOptions();">Add</button></td>
+							<td><button id="exceptionAdd" style="width: 100%;">Add</button></td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<select id="urls" size="10" style="width: 100%;" onclick="checkExceptionList(this)"></select>
+								<select id="urls" size="10" style="width: 100%;"></select>
 							</td>
 						</tr>
 						<tr>
 							<td style="width: 85%">&nbsp;</td>
-							<td><button id="exceptionRemove" style="width: 100%;" disabled="true" onclick="removeFromExceptionList(); saveOptions();">Remove</button></td>
+							<td><button id="exceptionRemove" style="width: 100%;" disabled="true">Remove</button></td>
 						</tr>
 					</table>
 				</div>
@@ -56,6 +56,19 @@
 			<td style="padding-top: 25px;">
 				<div class="divBorder" id="changelog"><div class="divTitle" id="changelog_title"><span>Changelog</span></div>
 					<table style="width: 100%;">
+						<tr>
+							<td style="width: 85%">
+								<span class="changelog">
+									Version 0.6.0 - 2016/03/01:
+									<ul>
+										<li>Moved to manifest version 2</li>
+										<li>Changed background page for event page, should lower CPU / memory usage of the extension</li>
+										<li>Changed internals to work with latest Chrome Extension APIs</li>
+										<li>Added an additional check to see if the target object is a legal textfield (isContentEditable)</li>
+									</ul>
+								</span>
+							</td>
+						</tr>
 						<tr>
 							<td style="width: 85%">
 								<span class="changelog">
