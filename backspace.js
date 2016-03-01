@@ -1,33 +1,42 @@
 var oldOnKeyDownHandler = null;
 
-if (!document.onkeydown)
-	oldOnKeyDownHandler = document.onkeydown;
+var legalTextfieldTypes = [
+	"date", "datetime", "datetime-local", "email", "month", "number", "password", "search", "tel", "text", "url", "week"
+];
 
-if (!isBlacklistedPage()) {
-	document.onkeydown = BackspaceKeyListener;
+function injectBackspaceHander() {
+	if (navigator.platform.toUpperCase().indexOf('WIN') > 0)
+		return;
 
-	// Send message to background.html to test
-	// for activated state
-	chrome.runtime.sendMessage( {
-		message: { 
-			command: "isActivated", 
-			data: location.href 
-		}
-	}, function(response) {
-		if (response.message == true)
-			showPageAction(true);
-		else
-			showPageAction(false);
-	} );
-} else {
-	showPageAction(false);
+	if (!document.onkeydown)
+		oldOnKeyDownHandler = document.onkeydown;
+
+	if (!isBlacklistedPage()) {
+		document.onkeydown = BackspaceKeyListener;
+
+		// Send message to background.html to test
+		// for activated state
+		chrome.runtime.sendMessage( {
+			message: {
+				command: "isActivated",
+				data: location.href
+			}
+		}, function(response) {
+			if (response.message == true)
+				showPageAction(true);
+			else
+				showPageAction(false);
+		} );
+	} else {
+		showPageAction(false);
+	}
 }
 
 function showPageAction(ok) {
 	chrome.runtime.sendMessage( {
-		message: { 
-			command: "showPageAction", 
-			data: ok 
+		message: {
+			command: "showPageAction",
+			data: ok
 		}
 	} );
 }
@@ -36,18 +45,18 @@ function BackspaceKeyListener(event) {
 	var isCtrl = event.ctrlKey;
 	var isAlt = event.altKey;
 	var isShift = event.shiftKey;
-	
+
 	if (!isCtrl && !isAlt) {
 		var target = event.target;
-		if (event.which == 8 && target) {		
+		if (event.which == 8 && target) {
 			// If on text fields or messagequeue
 			// was already triggered disable usage
 			if (isLegalTextfield(target)) {
 				if (!oldOnKeyDownHandler && typeof(oldOnKeyDownHandler) == 'function')
 					return oldOnKeyDownHandler(event);
-					
+
 				return true;
-			
+
 			} else {
 				// Mark as already triggered
 				window.setTimeout("UseBackspaceShortcut(" + isShift + ")", 0);
@@ -55,27 +64,27 @@ function BackspaceKeyListener(event) {
 			}
 		}
 	}
-	
+
 	return true;
 }
 
 function UseBackspaceShortcut(isShift) {
 	if (window.history.length == 1) {
 		chrome.runtime.sendMessage( {
-			message: { 
+			message: {
 				command: "closeTab"
 			}
 		} );
-		
+
 		return;
 	}
 
 	// Send message to background.html to test
 	// for activated state
 	chrome.runtime.sendMessage( {
-		message: { 
-			command: "isActivated", 
-			data: location.href 
+		message: {
+			command: "isActivated",
+			data: location.href
 		}
 	}, function(response) {
 		console.log(response.message);
@@ -92,21 +101,9 @@ function isLegalTextfield(target) {
 	if (target.isContentEditable)
 		return true;
 
-	if (target.type == 'text')
+	if (isLegalInputType(target))
 		return true;
-		
-	if (target.type == 'textarea')
-		return true;
-		
-	if (target.type == 'password')
-		return true;
-		
-	if (target.type == 'search')
-		return true;
-		
-	if (target.type == 'email')
-		return true;
-	
+
 	if (target.tagName == 'DIV' &&
 		target.className.indexOf("cell-input") > -1) {
 		return true;
@@ -132,7 +129,15 @@ function isLegalTextfield(target) {
 	if (target.outerHTML.indexOf('class="Mentions_Input" contenteditable="true"') > -1 &&
 			target.baseURI.indexOf('http://www.facebook.com/') > -1)
 		return true;
-		
+
+	return false;
+}
+
+function isLegalInputType(target) {
+	for (var i = 0; i < legalTextfieldTypes.length; i++) {
+		if (target.type == legalTextfieldTypes[i])
+	        return true;
+	}
 	return false;
 }
 
@@ -156,3 +161,6 @@ function isSystemWindows() {
 	else
 		return false;
 }
+
+// Inject the handler if eligible
+injectBackspaceHander();
