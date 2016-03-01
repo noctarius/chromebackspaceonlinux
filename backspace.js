@@ -8,11 +8,11 @@ if (!isBlacklistedPage()) {
 
 	// Send message to background.html to test
 	// for activated state
-	chrome.extension.sendRequest( {
-		message: JSON.stringify( { 
+	chrome.runtime.sendMessage( {
+		message: { 
 			command: "isActivated", 
 			data: location.href 
-		} )
+		}
 	}, function(response) {
 		if (response.message == true)
 			showPageAction(true);
@@ -24,11 +24,11 @@ if (!isBlacklistedPage()) {
 }
 
 function showPageAction(ok) {
-	chrome.extension.sendRequest( {
-		message: JSON.stringify( { 
+	chrome.runtime.sendMessage( {
+		message: { 
 			command: "showPageAction", 
 			data: ok 
-		} )
+		}
 	} );
 }
 
@@ -61,10 +61,10 @@ function BackspaceKeyListener(event) {
 
 function UseBackspaceShortcut(isShift) {
 	if (window.history.length == 1) {
-		chrome.extension.sendRequest( {
-			message: JSON.stringify( { 
+		chrome.runtime.sendMessage( {
+			message: { 
 				command: "closeTab"
-			} )
+			}
 		} );
 		
 		return;
@@ -72,11 +72,11 @@ function UseBackspaceShortcut(isShift) {
 
 	// Send message to background.html to test
 	// for activated state
-	chrome.extension.sendRequest( {
-		message: JSON.stringify( { 
+	chrome.runtime.sendMessage( {
+		message: { 
 			command: "isActivated", 
 			data: location.href 
-		} )
+		}
 	}, function(response) {
 		console.log(response.message);
 		if (response.message == true)
