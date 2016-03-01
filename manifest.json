@@ -1,8 +1,8 @@
 {
    "manifest_version": 2,
    "background": {
-      "scripts": [ "background.js" ]
-      //"persistent": false
+      "scripts": [ "background.js" ],
+      "persistent": false
    },
    "content_scripts": [ {
       "all_frames": true,
@@ -20,5 +20,5 @@
       "default_title": "Backspace-Keybinding State"
    },
    "permissions": [ "tabs", "notifications" ],
-   "version": "0.6.0"
+   "version": "1.0.0"
 }
