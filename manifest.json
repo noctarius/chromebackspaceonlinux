@@ -20,5 +20,5 @@
       "default_title": "Backspace-Keybinding State"
    },
    "permissions": [ "tabs", "notifications" ],
-   "version": "1.0.1"
+   "version": "1.0.2"
 }
