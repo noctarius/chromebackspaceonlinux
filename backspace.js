@@ -1,7 +1,8 @@
 var oldOnKeyDownHandler = null;
 
 var legalTextfieldTypes = [
-	"date", "datetime", "datetime-local", "email", "month", "number", "password", "search", "tel", "text", "url", "week"
+	"date", "datetime", "datetime-local", "email", "month", "number", "password", 
+	"search", "tel", "text", "url", "week", "textarea", "input"
 ];
 
 function injectBackspaceHander() {
