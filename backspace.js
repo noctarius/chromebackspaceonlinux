@@ -6,9 +6,6 @@ var legalTextfieldTypes = [
 ];
 
 function injectBackspaceHander() {
-	if (navigator.platform.toUpperCase().indexOf('WIN') > 0)
-		return;
-
 	if (!document.onkeydown)
 		oldOnKeyDownHandler = document.onkeydown;
 
@@ -61,6 +58,7 @@ function BackspaceKeyListener(event) {
 			} else {
 				// Mark as already triggered
 				window.setTimeout("UseBackspaceShortcut(" + isShift + ")", 0);
+				event.preventDefault();
 				return false;
 			}
 		}
@@ -96,6 +94,7 @@ function UseBackspaceShortcut(isShift) {
 				window.history.forward();
 		}
 	);
+	
 }
 
 function isLegalTextfield(target) {
@@ -143,9 +142,6 @@ function isLegalInputType(target) {
 }
 
 function isBlacklistedPage() {
-	if (isSystemWindows())
-		return true;
-
 	if (location.href.indexOf("docs.google.com") > -1)
 		return true;
 
@@ -153,14 +149,6 @@ function isBlacklistedPage() {
 		return true;
 
 	return false;
-}
-
-function isSystemWindows() {
-	var userAgent = navigator.userAgent;
-	if (userAgent.indexOf("Windows") != -1)
-		return true;
-	else
-		return false;
 }
 
 // Inject the handler if eligible

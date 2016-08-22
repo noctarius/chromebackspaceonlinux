@@ -13,12 +13,12 @@
    "icons": {
       "128": "128.png"
    },
-   "name": "Backspace As Back/Forward for Linux",
+   "name": "Backspace for Chrome",
    "options_page": "options.html",
    "page_action": {
       "default_icon": "enabled.png",
       "default_title": "Backspace-Keybinding State"
    },
    "permissions": [ "tabs", "notifications" ],
-   "version": "1.0.2"
+   "version": "2.0.0"
 }
