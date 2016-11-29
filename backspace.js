@@ -109,6 +109,11 @@ function isLegalTextfield(target) {
 		return true;
 	}
 
+	if (target.tagName == 'EMBED' &&
+		target.name == 'plugin') {
+		return true;
+	}
+	
 	if (location.href.indexOf("sites.google.com") > -1) {
 		var body = document.body;
 		if (body != null &&
