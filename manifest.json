@@ -14,11 +14,12 @@
       "128": "128.png"
    },
    "name": "Backspace for Chrome",
+   "short_name": "backspace_for_chrome",
    "options_page": "options.html",
    "page_action": {
       "default_icon": "enabled.png",
       "default_title": "Backspace-Keybinding State"
    },
    "permissions": [ "tabs", "notifications" ],
-   "version": "2.1.0"
+   "version": "2.2.0"
 }

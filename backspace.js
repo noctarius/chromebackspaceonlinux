@@ -57,7 +57,9 @@ function BackspaceKeyListener(event) {
 
 			} else {
 				// Mark as already triggered
-				window.setTimeout("UseBackspaceShortcut(" + isShift + ")", 0);
+				window.setTimeout(function() {
+					UseBackspaceShortcut(isShift);
+				}, 0);
 				event.preventDefault();
 				return false;
 			}
