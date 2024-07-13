@@ -21,6 +21,6 @@
       "default_icon": "enabled.png",
       "default_title": "Backspace-Keybinding State"
    },
-   "permissions": [ "tabs", "notifications", "storage" ],
+   "permissions": [ "tabs", "storage" ],
    "version": "3.0.0"
 }
