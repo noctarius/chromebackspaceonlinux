@@ -1,13 +1,14 @@
 {
    "manifest_version": 3,
    "background": {
-      "scripts": [ "background.js" ],
-      "persistent": false
+      "service_worker": "service-worker.js",
+      "type": "module"
    },
    "content_scripts": [ {
-      "all_frames": true,
+      "all_frames": false,
       "js": [ "backspace.js" ],
-      "matches": [ "http://*/*", "https://*/*", "ftp://*/*", "file:///*" ]
+      "matches": [ "http://*/*", "https://*/*", "ftp://*/*", "file:///*" ],
+      "run_at": "document_end"
    } ],
    "description": "Activate Backspace shortcuts to navigate in history object",
    "icons": {
@@ -16,10 +17,10 @@
    "name": "Backspace for Chrome",
    "short_name": "backspace_for_chrome",
    "options_page": "options.html",
-   "page_action": {
+   "action": {
       "default_icon": "enabled.png",
       "default_title": "Backspace-Keybinding State"
    },
-   "permissions": [ "tabs", "notifications" ],
-   "version": "2.2.0"
+   "permissions": [ "tabs", "notifications", "storage" ],
+   "version": "3.0.0"
 }

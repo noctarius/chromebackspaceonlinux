@@ -12,7 +12,7 @@ async function injectBackspaceHander() {
 	if (!isBlacklistedPage()) {
 		document.onkeydown = BackspaceKeyListener;
 
-		// Send message to background.html to test
+		// Send message to the service worker to test
 		// for activated state
 		const response = await chrome.runtime.sendMessage( {
 			message: {
@@ -21,7 +21,7 @@ async function injectBackspaceHander() {
 			}
 		} );
 
-		if (response.message == true)
+		if (response.message === true)
 			await showPageAction(true);
 		else
 		await showPageAction(false);
@@ -46,7 +46,7 @@ function BackspaceKeyListener(event) {
 
 	if (!isCtrl && !isAlt) {
 		var target = event.target;
-		if (event.which == 8 && target) {
+		if (event.which === 8 && target) {
 			// If on text fields or messagequeue
 			// was already triggered disable usage
 			if (isLegalTextfield(target)) {
@@ -70,7 +70,7 @@ function BackspaceKeyListener(event) {
 }
 
 async function UseBackspaceShortcut(isShift) {
-	if (window.history.length == 1) {
+	if (window.history.length === 1) {
 		return chrome.runtime.sendMessage( {
 			message: {
 				command: "closeTab"
@@ -87,12 +87,12 @@ async function UseBackspaceShortcut(isShift) {
 		}
 	} );
 
-	console.log(response.message);
-	if (response.message == true)
+	if (response.message === true) {
 		if (!isShift)
 			window.history.back();
 		else
 			window.history.forward();
+	}
 }
 
 function isLegalTextfield(target) {
@@ -102,13 +102,13 @@ function isLegalTextfield(target) {
 	if (isLegalInputType(target))
 		return true;
 
-	if (target.tagName == 'DIV' &&
+	if (target.tagName === 'DIV' &&
 		target.className.indexOf("cell-input") > -1) {
 		return true;
 	}
 
-	if (target.tagName == 'EMBED' &&
-		target.name == 'plugin') {
+	if (target.tagName === 'EMBED' &&
+		target.name === 'plugin') {
 		return true;
 	}
 	
@@ -122,11 +122,11 @@ function isLegalTextfield(target) {
 	var selection = window.getSelection();
 	if (selection.focusNode) {
 		if ( ( selection.focusNode.nodeType != 3 && selection.focusNode.isContentEditable ) ||
-			( selection.focusNode.nodeType == 3 && selection.focusNode.parentNode.isContentEditable ))
+			( selection.focusNode.nodeType === 3 && selection.focusNode.parentNode.isContentEditable ))
 			return true;
 	}
 
-	if (target.ownerDocument.designMode == "on")
+	if (target.ownerDocument.designMode === "on")
 		return true;
 
 	if (target.outerHTML.indexOf('class="Mentions_Input" contenteditable="true"') > -1 &&
@@ -138,7 +138,7 @@ function isLegalTextfield(target) {
 
 function isLegalInputType(target) {
 	for (var i = 0; i < legalTextfieldTypes.length; i++) {
-		if (target.type == legalTextfieldTypes[i])
+		if (target.type === legalTextfieldTypes[i])
 	        return true;
 	}
 	return false;

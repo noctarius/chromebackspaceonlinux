@@ -162,7 +162,7 @@ async function getOptionsStorage() {
 }
 
 async function setOptionsStorage(content) {
-    return chrome.storage.sync.get(content);
+    return chrome.storage.sync.set(content);
 }
 
 document.addEventListener('DOMContentLoaded', startup);
