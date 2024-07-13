@@ -1,61 +1,62 @@
 // Saves options to localStorage.
-var urls;
+let urls;
 
-function saveOptions() {
-  var select = document.getElementById("backspace");
-  var activate = select.checked;
-  localStorage["activated"] = activate;
+async function saveOptions() {
+	const getCheckboxValue = (name) => {
+		const checkbox = document.getElementById(name);
+		if (!checkbox)
+			return false;
+		return checkbox.checked;
+	}
 
-  select = document.getElementById("closetab");
-  activate = select.checked;
-  localStorage["closeOnHistoryTop"] = activate;
-  
-  select = document.getElementById("pageaction");
-  activate = select.checked;
-  localStorage["showPageAction"] = activate;
+	const storage = await getOptionsStorage();
+	storage["activated"] = getCheckboxValue("backspace");
+	storage["closeOnHistoryTop"] = getCheckboxValue("closetab");
+	storage["showPageAction"] = getCheckboxValue("pageaction");
+	storage["exceptions"] = JSON.stringify(urls);
+	await setOptionsStorage(storage);
 
-  // Update status to let user know options were saved.
-  var status = document.getElementById("status");
-  status.innerHTML = "Options Saved.";
-  setTimeout(function() {
-    status.innerHTML = "";
-  }, 750);
-  
-  localStorage["exceptions"] = JSON.stringify(urls);
+	// Update status to let user know options were saved.
+	const status = document.getElementById("status");
+	status.innerHTML = "Options Saved.";
+	setTimeout(function() {
+		status.innerHTML = "";
+	}, 750);
 }
 
-// Restores select box state to saved value from localStorage.
-function restoreOptions() {
-  var activate = localStorage["activated"];
-  if (activate) {
-	  activate = activate == "false" ? false : true;
-	  var select = document.getElementById("backspace");
-	  select.checked = activate;
-  }
-  
-  activate = localStorage["closeOnHistoryTop"];
-  if (activate) {
-	  activate = activate == "false" ? false : true;
-	  var select = document.getElementById("closetab");
-	  select.checked = activate;
-  }
+// Restores select box state to saved value from storage.
+async function restoreOptions() {
+	const storage = await getOptionsStorage();
+	let activate = storage["activated"];
+	if (activate) {
+		activate = activate == "false" ? false : true;
+		const select = document.getElementById("backspace");
+		select.checked = activate;
+	}
 
-  activate = localStorage["showPageAction"];
-  if (activate) {
-	  activate = activate == "false" ? false : true;
-	  var select = document.getElementById("pageaction");
-	  select.checked = activate;
-  }
-  
-  urls = localStorage["exceptions"];
-  if (!urls || urls == "undefined")
-  	urls = new Array();
-  else
-    urls = JSON.parse(urls);
+	activate = storage["closeOnHistoryTop"];
+	if (activate) {
+		activate = activate == "false" ? false : true;
+		const select = document.getElementById("closetab");
+		select.checked = activate;
+	}
+
+	activate = storage["showPageAction"];
+	if (activate) {
+		activate = activate == "false" ? false : true;
+		const select = document.getElementById("pageaction");
+		select.checked = activate;
+	}
+
+	urls = storage["exceptions"];
+	if (!urls || urls == "undefined")
+		urls = new Array();
+	else
+		urls = JSON.parse(urls);
 }
 
-function startup() {
-	restoreOptions();
+async function startup() {
+	await restoreOptions();
 	fillExceptionList(urls);
 
 	// Register checkbox click handlers
@@ -154,6 +155,14 @@ function removeFromExceptionList() {
 	urls = temp;
 	urls.sort();
 	fillExceptionList(urls);	
+}
+
+async function getOptionsStorage() {
+    return (await chrome.storage.sync.get()) || {};
+}
+
+async function setOptionsStorage(content) {
+    return chrome.storage.sync.get(content);
 }
 
 document.addEventListener('DOMContentLoaded', startup);
