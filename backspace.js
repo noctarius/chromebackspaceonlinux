@@ -5,7 +5,7 @@ var legalTextfieldTypes = [
 	"search", "tel", "text", "url", "week", "textarea", "input"
 ];
 
-function injectBackspaceHander() {
+async function injectBackspaceHander() {
 	if (!document.onkeydown)
 		oldOnKeyDownHandler = document.onkeydown;
 
@@ -14,24 +14,24 @@ function injectBackspaceHander() {
 
 		// Send message to background.html to test
 		// for activated state
-		chrome.runtime.sendMessage( {
+		const response = await chrome.runtime.sendMessage( {
 			message: {
 				command: "isActivated",
 				data: location.href
 			}
-		}, function(response) {
-			if (response.message == true)
-				showPageAction(true);
-			else
-				showPageAction(false);
 		} );
+
+		if (response.message == true)
+			await showPageAction(true);
+		else
+		await showPageAction(false);
 	} else {
-		showPageAction(false);
+		await showPageAction(false);
 	}
 }
 
-function showPageAction(ok) {
-	chrome.runtime.sendMessage( {
+async function showPageAction(ok) {
+	return chrome.runtime.sendMessage( {
 		message: {
 			command: "showPageAction",
 			data: ok
@@ -57,8 +57,8 @@ function BackspaceKeyListener(event) {
 
 			} else {
 				// Mark as already triggered
-				window.setTimeout(function() {
-					UseBackspaceShortcut(isShift);
+				window.setTimeout(async () => {
+					await UseBackspaceShortcut(isShift);
 				}, 0);
 				event.preventDefault();
 				return false;
@@ -69,34 +69,30 @@ function BackspaceKeyListener(event) {
 	return true;
 }
 
-function UseBackspaceShortcut(isShift) {
+async function UseBackspaceShortcut(isShift) {
 	if (window.history.length == 1) {
-		chrome.runtime.sendMessage( {
+		return chrome.runtime.sendMessage( {
 			message: {
 				command: "closeTab"
 			}
 		} );
-
-		return;
 	}
 
 	// Send message to background.html to test
 	// for activated state
-	chrome.runtime.sendMessage( {
+	const response = await chrome.runtime.sendMessage( {
 		message: {
 			command: "isActivated",
 			data: location.href
 		}
-	}, function(response) {
-		console.log(response.message);
-		if (response.message == true)
-			if (!isShift)
-				window.history.back();
-			else
-				window.history.forward();
-		}
-	);
-	
+	} );
+
+	console.log(response.message);
+	if (response.message == true)
+		if (!isShift)
+			window.history.back();
+		else
+			window.history.forward();
 }
 
 function isLegalTextfield(target) {
@@ -158,5 +154,5 @@ function isBlacklistedPage() {
 	return false;
 }
 
-// Inject the handler if eligible
+// Inject the handler if eligible (careful, async call)
 injectBackspaceHander();
