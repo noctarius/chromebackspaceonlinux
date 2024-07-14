@@ -1,5 +1,6 @@
 {
    "manifest_version": 3,
+   "version": "3.0.0",
    "background": {
       "service_worker": "service-worker.js",
       "type": "module"
@@ -14,13 +15,15 @@
    "icons": {
       "128": "128.png"
    },
-   "name": "Backspace for Chrome",
-   "short_name": "backspace_for_chrome",
-   "options_page": "options.html",
+   "name": "Backspace for Navigation",
+   "options_ui": {
+      "page": "options.html",
+      "open_in_tab": true
+   },
    "action": {
       "default_icon": "enabled.png",
       "default_title": "Backspace-Keybinding State"
    },
    "permissions": [ "tabs", "storage" ],
-   "version": "3.0.0"
+   "incognito": "split"
 }
