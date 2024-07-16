@@ -45,7 +45,15 @@ function BackspaceKeyListener(event) {
 	var isShift = event.shiftKey;
 
 	if (!isCtrl && !isAlt) {
-		var target = event.target;
+		const extractTarget = (event) => {
+			if (event.composed) {
+				const composedPath = event.composedPath();
+				return composedPath[0];
+			}
+			return event.target;
+		}
+
+		const target = extractTarget(event);
 		if (event.which === 8 && target) {
 			// If on text fields or messagequeue
 			// was already triggered disable usage
