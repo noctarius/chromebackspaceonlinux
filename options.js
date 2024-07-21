@@ -59,6 +59,8 @@ async function startup() {
 	await restoreOptions();
 	fillExceptionList(urls);
 
+	await checkOptionsUpgrade();
+
 	// Register checkbox click handlers
 	var checkboxes = document.querySelectorAll('input[type=checkbox]');
 	for (var i = 0; i < checkboxes.length; i++) {
@@ -80,6 +82,29 @@ async function startup() {
 	document.getElementById('urls').addEventListener("click", function(el) {
 		checkExceptionList(el);
 	});
+}
+
+async function checkOptionsUpgrade() {
+	const installed = localStorage.getItem("installed");
+	if (!installed) {
+		return;
+	}
+
+	console.log("Running migration...");
+	const exceptions = JSON.parse(localStorage.getItem("exceptions") || "[]");
+	const allExceptions = new Set(urls);
+	exceptions.forEach(element => {
+		allExceptions.add(element);
+	});
+
+	fillExceptionList([...allExceptions.values()]);
+	saveOptions();
+
+	localStorage.removeItem("installed");
+	localStorage.removeItem("activated");
+	localStorage.removeItem("closeOnHistoryTop");
+	localStorage.removeItem("showPageAction");
+	localStorage.removeItem("exceptions");
 }
 
 function addException() {
