@@ -10,12 +10,12 @@ img {
 .divBorder {
 	width: 100%;
 	border: 1px solid #000000;
-	padding: 30px 10px 10px 10px;
+	padding: 10px;
 }
 
 .divTitle {
 	position: relative;
-	top: -40px;
+	top: -20px;
 }
 
 .divTitle span {
