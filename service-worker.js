@@ -13,7 +13,7 @@ async function showPageAction(tab, csMessage) {
 		return;
 
 	const path = "enabled.png";
-	const  title = "Backspace Key-Binding enabled";
+	const title = "Backspace Key-Binding enabled";
 	if (csMessage.data === false) {
 		path = "disabled.png";
 		title = "Backspace Key-Binding disabled";
