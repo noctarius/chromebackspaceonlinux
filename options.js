@@ -29,27 +29,27 @@ async function restoreOptions() {
 	const storage = await getOptionsStorage();
 	let activate = storage["activated"];
 	if (activate) {
-		activate = activate == "false" ? false : true;
+		activate = activate === "false" ? false : true;
 		const select = document.getElementById("backspace");
 		select.checked = activate;
 	}
 
 	activate = storage["closeOnHistoryTop"];
 	if (activate) {
-		activate = activate == "false" ? false : true;
+		activate = activate === "false" ? false : true;
 		const select = document.getElementById("closetab");
 		select.checked = activate;
 	}
 
 	activate = storage["showPageAction"];
 	if (activate) {
-		activate = activate == "false" ? false : true;
+		activate = activate === "false" ? false : true;
 		const select = document.getElementById("pageaction");
 		select.checked = activate;
 	}
 
 	urls = storage["exceptions"];
-	if (!urls || urls == "undefined")
+	if (!urls || urls === "undefined")
 		urls = new Array();
 	else
 		urls = JSON.parse(urls);
@@ -117,7 +117,7 @@ function addException() {
 	if (!urls) urls = new Array();
 	
 	for (var i = 0; i < urls.length; i++) {
-		if (urls[i] == value) return;
+		if (urls[i] === value) return;
 	}
 	
 	urls.push(value);
@@ -154,7 +154,7 @@ function clearList(list) {
 function checkExceptionList(list) {
 	var index = list.selectedIndex;
 	var button = document.getElementById("exceptionRemove");
-	if (index == -1) {
+	if (index === -1) {
 		button.disabled=true;
 	} else {
 		button.disabled=false;
@@ -166,13 +166,13 @@ function removeFromExceptionList() {
 	if (!list) return;
 	
 	var index = list.selectedIndex;
-	if (index == -1) return;
+	if (index === -1) return;
 
 	if (!urls) urls = new Array();
 
 	var temp = new Array();
 	for (var i = 0; i < urls.length; i++) {
-		if (i == index) continue;
+		if (i === index) continue;
 		
 		temp.push(urls[i]);
 	}
